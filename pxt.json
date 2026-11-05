@@ -1,0 +1,20 @@
+{
+  "name": "pxt-wind-current",
+  "version": "1.0.1",
+  "description": "風車電流計",
+  "dependencies": {
+    "core": "*"
+  },
+  "files": [
+    "meter.ts"
+  ],
+  "testFiles": [
+    "main.ts",
+    "main.blocks"
+  ],
+  "preferredEditor": "blocksprj",
+  "supportedTargets": [
+    "microbit"
+  ],
+  "public": true
+}

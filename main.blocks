@@ -1,0 +1,1 @@
+<xml xmlns="https://developers.google.com/blockly/xml"><block type="pxt-on-start" x="30" y="30"><statement name="HANDLER"><block type="wind_meter_start_current"><field name="direction">WindDigitOrder.DS1Left</field></block></statement></block></xml>
