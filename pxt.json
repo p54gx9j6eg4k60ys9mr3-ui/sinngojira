@@ -1,7 +1,7 @@
 {
   "name": "pxt-wind-current",
   "version": "1.0.1",
-  "description": "風車電流計",
+  "description": "風車電力計",
   "dependencies": {
     "core": "*"
   },
@@ -18,3 +18,4 @@
   ],
   "public": true
 }
+```[cite: 6]
