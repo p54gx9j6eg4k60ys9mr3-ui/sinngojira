@@ -6,7 +6,6 @@ namespace powerMeter {
     let order = WindDigitOrder.DS1Left
     let running = false
 
-    // 4桁7セグLEDへの表示制御（電流計コードと共通の仕組み）
     function display(glyphs: number[]) {
         for (let stage = 3; stage >= 0; stage--) {
             let index = order == WindDigitOrder.DS1Left ? stage : 3 - stage
@@ -40,17 +39,11 @@ namespace powerMeter {
             return
         }
         
-        // 1. 電圧(mV)の算出: 0.0625 mV/count × 分圧比(x3)
+        // 0.0625 mV/count × 分圧比(x3) から電圧(mV)を算出し、100Ωでの電力(mW)を計算
         let voltageMv = Math.max(0, raw) * 0.1875
-        
-        // 2. 電力(mW)の計算: P = V^2 / R 
-        // voltageMv (mV) をベースに計算し、mW単位に換算 (R = 100Ω)
-        // P(mW) = (V_mV * V_mV) / 100000 / 100 ... などの計算を調整
-        // 例: mW = (voltageMv * voltageMv) / 100000 (100Ωの場合)
         let powerMw = Math.round((voltageMv * voltageMv) / 100000)
-        let displayVal = Math.min(9999, powerMw) // 4桁に収める
+        let displayVal = Math.min(9999, powerMw)
 
-        // 3. 4桁のセグメント表示用に各桁を分解
         let d3 = Math.idiv(displayVal, 1000) % 10
         let d2 = Math.idiv(displayVal, 100) % 10
         let d1 = Math.idiv(displayVal, 10) % 10
@@ -84,3 +77,57 @@ namespace powerMeter {
         })
     }
 }
+```[cite: 2]
+
+---
+
+#### ② `pxt.json` の変更
+GitHub上の `pxt.json` を開き、`files` の中に `power-meter.ts` が含まれるように書き換えて保存します[cite: 3, 7]。
+
+```json
+{
+  "name": "pxt-wind-current",
+  "version": "1.0.1",
+  "description": "風車電力計",
+  "dependencies": {
+    "core": "*"
+  },
+  "files": [
+    "meter.ts",
+    "power-meter.ts"
+  ],
+  "testFiles": [
+    "main.ts",
+    "main.blocks"
+  ],
+  "preferredEditor": "blocksprj",
+  "supportedTargets": [
+    "microbit"
+  ],
+  "public": true
+}
+```[cite: 3, 7]
+
+---
+
+### 💡 MakeCodeブロックの配置
+MakeCodeエディタ側で拡張機能を再読み込みしたら、「最初だけ」ブロックの中に新しい電力用ブロックを配置します[cite: 4, 6]。
+
+```blockly
+<xml xmlns="https://developers.google.com/blockly/xml">
+  <block type="pxt-on-start" x="30" y="30">
+    <statement name="HANDLER">
+      <block type="wind_meter_start_power">
+        <field name="direction">WindDigitOrder.DS1Left</field>
+      </block>
+    </statement>
+  </block>
+</xml>
+```[cite: 6]
+
+---
+
+<ElicitationsGroup message="設定や読み込みで不明な点がある場合はこちらをお試しください：">
+  <Elicitation label="拡張機能の削除と再追加の手順" query="MakeCodeから古い拡張機能を完全に削除して再追加する詳しい手順を教えてください。"/>
+  <Elicitation label="表示単位や計算式の調整" query="電力の表示単位や計算式を微調整する方法を教えてください。"/>
+</ElicitationsGroup>
