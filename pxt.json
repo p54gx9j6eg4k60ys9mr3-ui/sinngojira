@@ -7,7 +7,6 @@
   },
   "files": [
     "meter.ts"
-    "power-meter.ts"
   ],
   "testFiles": [
     "main.ts",
