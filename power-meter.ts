@@ -5,7 +5,7 @@ namespace 風車電力計 {
      * アナログピンから電圧(V)を測定します
      * @param pin 測定するピン
      */
-    //% block="電圧を測定する ピン %pin"
+    //% block="ピン %pin の電圧を測る(V)"
     export function measureVoltage(pin: AnalogPin): number {
         let raw = pins.analogReadPin(pin);
         let voltage = (raw * 3.3) / 1023;
@@ -16,7 +16,7 @@ namespace 風車電力計 {
      * 100Ωの抵抗を使って電力(W)を計算します
      * @param pin 測定するピン
      */
-    //% block="100Ωの電力を計算する ピン %pin"
+    //% block="ピン %pin の電力換算値(W)"
     export function measurePower(pin: AnalogPin): number {
         let v = measureVoltage(pin);
         let power = (v * v) / 100;
